@@ -1,0 +1,33 @@
+- title "Banners"
+
+.content
+  %h2 Current Banners
+  
+  = table_for Banners::Banner do |table|
+    = table.rows(@banners) do |row, banner|
+      - row.resource = banner
+      
+      = row.icon(banner.icon)
+      = row.column(:label, :link => true)
+      = row.column(:url)
+      = row.column(:tags) { safe_join(banner.tags.map { |tag| content_tag(:span, tag, :class => "tag") }, " ") }
+      
+      = row.controls do |c|
+        = c.delete
+        
+    = table.empty do
+      No banners have been created.
+
+.sidebar
+  = render_flash
+  
+  .buttons
+    = button "New Banner", :icon => :publish, :url => new_banner_path
+  
+  %hr
+  
+  = render "wheelhouse/admin/configuration/sidebar"
+  
+  = hook(:"site-options.sidebar")
+
+- content_for(:head) { stylesheet_link_tag("banners/admin") }

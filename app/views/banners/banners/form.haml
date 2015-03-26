@@ -1,0 +1,21 @@
+- tab :banner do
+  = field :label do
+    = form.text_field :label
+  
+  .columns-3
+    = field :url, :class => "span-2" do
+      = form.text_field :url, :placeholder => "http://"
+
+    = field :target, :label => "Open link in" do
+      = form.select :target, [["New window", "_blank"], ["Current window", nil]]
+  
+  - Banners::Plugin.config.wheelhouse.banners.breakpoints.each do |label, breakpoint|
+    = form.fields_for :images do |f|
+      = f.field label do
+        = f.image label, :value => @banner.image(label)
+    
+- sidebar :options do
+  .shaded
+    = field :tags do
+      = form.tags :tags, Banners::Banner.all_tags, :placeholder => "Add a tag..."
+    

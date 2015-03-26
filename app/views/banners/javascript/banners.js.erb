@@ -1,0 +1,74 @@
+(function(window, document) { 
+
+var banners = [
+  <%= safe_join(@banners.map { |banner| banner.to_json.html_safe }, ",\n  ") %>
+];
+
+var banner = banners[Math.floor(Math.random() * banners.length)];
+
+if (banner) {
+  var base = document.createElement("span");
+
+  var script = document.getElementById('banner');
+  script.parentNode.insertBefore(base, script);
+
+  function matchingImages() {
+    var matches = [];
+  
+    for (var breakpoint in banner.images) {
+      if (breakpoint !== "default" && banner.images.hasOwnProperty(breakpoint)) {
+        if (window.matchMedia && window.matchMedia(breakpoint).matches) {
+          matches.push(banner.images[breakpoint]);
+        }
+      }
+    }
+  
+    if (banner.images["default"]) {
+      matches.push(banner.images["default"]);
+    }
+  
+    return matches;
+  }
+
+  function updateBanner() {
+    var matches = matchingImages();
+    var img = base.getElementsByTagName("img")[0];
+    var el = base.getElementsByTagName("a")[0] || img;
+  
+    if (matches.length) {
+      if (!el || el.parentNode.nodeName === "NOSCRIPT") {
+        if (banner.url) {
+          el = document.createElement("a");
+          el.href = banner.url;
+          if (banner.target) { el.target = banner.target; }
+        
+          img = document.createElement("img");
+          el.appendChild(img);
+        } else {
+          el = img = document.createElement("img");
+        }
+      
+        img.alt = banner.label;
+      }
+    
+      img.src = matches[0];
+    
+      base.appendChild(el);
+    } else if (img) {
+      base.removeChild(el);
+    }
+  }
+
+  if (window.addEventListener) {
+    window.addEventListener("resize", updateBanner, false);
+    window.addEventListener("DOMContentLoaded", function() {
+      updateBanner();
+      window.removeEventListener("load", updateBanner, false);
+    }, false);
+    window.addEventListener("load", updateBanner, false);
+  } else if (window.attachEvent) {
+    window.attachEvent("onload", updateBanner);
+  }
+}
+
+})(this, document);

@@ -1,0 +1,13 @@
+en:
+  resource:
+    attributes:
+      banners/banner:
+        url: URL
+        
+  sections:
+    configuration/banners: Edit Banners
+    
+    links:
+      configuration/banners:
+        new_banner: New Banner
+        
