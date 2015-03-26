@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.author      = "Sam Pohlenz"
   s.email       = "sam@wheelhousecms.com"
   s.homepage    = "https://www.wheelhousecms.com"
+  s.licenses    = ["MIT"]
   
   s.files        = Dir["{app,config,lib}/**/*"]
   s.require_path = "lib"
