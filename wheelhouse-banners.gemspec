@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "wheelhouse-banners"
   s.platform    = Gem::Platform::RUBY
-  s.version     = "0.1"
+  s.version     = "1.0"
 
   s.required_ruby_version     = ">= 1.8.7"
   s.required_rubygems_version = ">= 1.3.6"
@@ -15,5 +15,5 @@ Gem::Specification.new do |s|
   s.files        = Dir["{app,config,lib}/**/*"]
   s.require_path = "lib"
   
-  s.add_dependency("wheelhouse", "~> 1.1.0.beta")
+  s.add_dependency("wheelhouse", "~> 1.1.0")
 end
